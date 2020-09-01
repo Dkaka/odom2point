@@ -1,0 +1,8 @@
+<launch>
+  <node name="odom2pointconverter" pkg="odom2point" type="odom2point">
+    <!-- source:change "pose_ground_truth" to your gazebo plugin output name -->
+    <remap from="ground_truth_odom" to="pose_ground_truth" />
+    <!-- destination: change "any_output" to the topic name you want posestamped message to be sent to-->
+    <remap from="ground_truth_pose" to="any_output" />
+  </node>
+</launch>
