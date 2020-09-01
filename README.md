@@ -1,25 +1,25 @@
-# baselink_map_pose
+# odom2point
 
-This ROS package generates nav_msgs::Odometry  message of base_link against map from tf tree. For comparison with the ground truth pose from gazebo.
+This ROS package converts [nav_msgs](http://docs.ros.org/melodic/api/nav_msgs/html/index-msg.html)/Odometry Message message to [geometry_msgs](https://docs.ros.org/api/geometry_msgs/html/index-msg.html)/PoseStamped Message.
 
-
+Initially made for use gazebo p3d plugin with supereight_ros.
 
 It is tested under Melodic and the husky robot or simulator.
 
-Run using the command `rosrun baselink_map_pose pose_base_map`
+Run using the command `roslaunch odom2point converter.launch`
 
-The result topic to be subscribed is `tf_baselink_map`.
+Change the default source and destination topic names accordingly in the launch file.
 
 ### Ground truth pose message from gazebo
 
-One example of generating the ground truth pose of the robot is to use the p3d plugin in gazebo. For instance, by adding the following lines in the .gazebo file or urdf file for the robot:
+One example of generating the ground truth pose of the camera is to use the p3d plugin in gazebo. For instance, by adding the following lines in the .gazebo file or urdf file for the camera:
 
 ```xml
 <gazebo>
   <plugin name="ground_truth" filename="libgazebo_ros_p3d.so">
     <robotNamespace>$(arg robot_namespace)</robotNamespace>
     <frameName>map</frameName>
-    <bodyName>base_link</bodyName>
+    <bodyName>camera_link</bodyName>
     <topicName>pose_ground_truth</topicName>
     <updateRate>60.0</updateRate>
   </plugin>
@@ -27,12 +27,3 @@ One example of generating the ground truth pose of the robot is to use the p3d p
 ```
 
 Then the ground truth message will be published at topic `pose_ground_truth`.
-
-## Plot xy coordinates of the robot using PlotJuggler
-
-
-Load in a ros bag or capture stream from PlotJuggler. Please refer to the  [PlotJuggler-GitHub](https://github.com/facontidavide/PlotJuggler) for installation and basic usage.
-
-Use the right mouse click [PlotJuggler CheatSHeet](https://www.plotjuggler.io/cheatsheet) to load in `pose.psosition.x` and `pose.psosition.y` and other ones as shown below (legends on the top right):
-
-![2](./image/2.png)
